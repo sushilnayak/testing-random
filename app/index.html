@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+     <script src="https://code.angularjs.org/1.5.6/angular.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.1/semantic.js"></script>
+     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.1/semantic.min.css">
+     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.1/components/card.min.css">
+     <link rel="stylesheet" href="css/style.css" />
+     <script src="js/script.js"></script>
+</head>
+
+<body ng-app="myApp" ng-controller="myController" class="ui container">
+     <div id="main" style="padding-top:20px;">
+
+<div class="ui six doubling cards" style="font-size:x-small;">
+          <div ng-repeat="x in data.feed.entry" class="fluid card" >
+
+              <div class="image"><img ng-src={{x['im:image'][2].label}}></div>
+              <div class="content">
+                <div class="header">{{x['im:name'].label}}</div>
+                <div class="meta">
+                  <a>{{x['im:collection']['im:name'].label}}</a>
+                </div>
+                <div class="description">
+                  {{x['im:artist'].label}}
+                </div>
+              </div>
+
+          </div>
+
+     </div>
+</div>
+
+
+     <script>
+          var myApp = angular.module('myApp', []);
+
+          myApp.controller('myController', function($scope, $http) {
+               $http.get('https://itunes.apple.com/uk/rss/topsongs/limit=200/json').success(function(data) {
+                    $scope.data = data;
+               })
+          })
+     </script>
+</body>
+
+</html>
